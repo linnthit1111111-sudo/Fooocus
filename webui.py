@@ -23,6 +23,7 @@ import json
 import time
 import shared
 import modules.config
+from modules.promptgen_myanmar import expand_myanmar_prompt
 import fooocus_version
 import modules.html
 import modules.async_worker as worker
@@ -192,6 +193,9 @@ with shared.gradio_root:
                     expanded_prompt = gr.Textbox(show_label=False, placeholder="Expanded prompt will appear here.", elem_id='expanded_prompt', lines=3, interactive=False)
 
                     def expand_btn_click(user_prompt):
+                        """
+                        Translate Myanmar prompt to English, expand, and return the expanded prompt.
+                        """
                         return expand_myanmar_prompt(user_prompt)
 
                     expand_btn = gr.Button("မြန်မာ Prompt ပြည့်စုံအောင် ပြောင်းမည်", elem_id="expand_myanmar_btn")
