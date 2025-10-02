@@ -226,8 +226,11 @@ with shared.gradio_root:
                     skip_button.click(skip_clicked, inputs=currentTask, outputs=currentTask, queue=False, show_progress=False)
             with gr.Row(elem_classes='advanced_check_row'):
                 input_image_checkbox = gr.Checkbox(label='Input Image', value=modules.config.default_image_prompt_checkbox, container=False, elem_classes='min_check')
+                gr.HTML('<span title="ဤအမှန်ခြစ်ကို ဖွင့်ထားလျှင် ပုံတစ်ပုံထည့်သွင်းပြီး prompt နှင့်ပေါင်းစပ်ဖန်တီးနိုင်သည်။">ℹ️ အသုံးပြုနည်း</span>')
                 enhance_checkbox = gr.Checkbox(label='Enhance', value=modules.config.default_enhance_checkbox, container=False, elem_classes='min_check')
+                gr.HTML('<span title="ဤအမှန်ခြစ်ကို ဖွင့်ထားလျှင် ပုံရုပ်ထွက်အရည်အသွေးကို အလိုအလျောက် မြှင့်တင်ပေးမည်။">ℹ️ အသုံးပြုနည်း</span>')
                 advanced_checkbox = gr.Checkbox(label='Advanced', value=modules.config.default_advanced_checkbox, container=False, elem_classes='min_check')
+                gr.HTML('<span title="အဆင့်မြင့်ရွေးချယ်စရာများကို ဖွင့်/ပိတ် ပြုလုပ်နိုင်သည်။ ပိုမိုအသေးစိတ် option များကို ပြသပေးမည်။">ℹ️ အသုံးပြုနည်း</span>')
             with gr.Row(visible=modules.config.default_image_prompt_checkbox) as image_input_panel:
                 with gr.Tabs(selected=modules.config.default_selected_image_input_tab_id):
                     with gr.Tab(label='Upscale or Variation', id='uov_tab') as uov_tab:
