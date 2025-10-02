@@ -1,3 +1,6 @@
+html, body {
+  background-color: #fff !important;
+}
 /* based on https://github.com/AUTOMATIC1111/stable-diffusion-webui/blob/v1.6.0/style.css */
 
 .loader-container {

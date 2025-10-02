@@ -1,3 +1,21 @@
+from extras.expansion import FooocusExpansion
+# Initialize expansion model (singleton)
+expansion_model = None
+def get_expansion_model():
+    global expansion_model
+    if expansion_model is None:
+        expansion_model = FooocusExpansion()
+    return expansion_model
+
+# Function to expand Myanmar prompt
+def expand_myanmar_prompt(prompt, seed=42):
+    # Only expand if prompt is not empty
+    if not prompt.strip():
+        return prompt
+    model = get_expansion_model()
+    # Call expansion model (will add more to the prompt)
+    expanded = model(prompt, seed)
+    return expanded
 import gradio as gr
 import random
 import os
@@ -145,7 +163,7 @@ def inpaint_mode_change(mode, inpaint_engine_version):
 
 reload_javascript()
 
-title = f'Fooocus {fooocus_version.version}'
+title = f'NMS-SDXL {fooocus_version.version}'
 
 if isinstance(args_manager.args.preset, str):
     title += ' ' + args_manager.args.preset
@@ -169,8 +187,15 @@ with shared.gradio_root:
                                  elem_id='final_gallery')
             with gr.Row():
                 with gr.Column(scale=17):
-                    prompt = gr.Textbox(show_label=False, placeholder="Type prompt here or paste parameters.", elem_id='positive_prompt',
-                                        autofocus=True, lines=3)
+
+                    prompt = gr.Textbox(show_label=False, placeholder="Type prompt here or paste parameters.", elem_id='positive_prompt', autofocus=True, lines=3)
+                    expanded_prompt = gr.Textbox(show_label=False, placeholder="Expanded prompt will appear here.", elem_id='expanded_prompt', lines=3, interactive=False)
+
+                    def expand_btn_click(user_prompt):
+                        return expand_myanmar_prompt(user_prompt)
+
+                    expand_btn = gr.Button("မြန်မာ Prompt ပြည့်စုံအောင် ပြောင်းမည်", elem_id="expand_myanmar_btn")
+                    expand_btn.click(expand_btn_click, inputs=prompt, outputs=expanded_prompt)
 
                     default_prompt = modules.config.default_prompt
                     if isinstance(default_prompt, str) and default_prompt != '':
